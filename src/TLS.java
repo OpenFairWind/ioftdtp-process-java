@@ -18,7 +18,7 @@ public class TLS {
     private Decryptor decryptor;
     private DigitalSignValidator digitalSignValidator;
 
-    public TLS(String destPrivateKey, String obfuscatedKey, String IV, String srcPublicKey) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    public TLS(String destPrivateKey, String obfuscatedKey, String IV, String srcPublicKey) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchProviderException {
 
         // get publicKey from string
         PublicKey srcPBK = stringToPublicKey(srcPublicKey);
@@ -29,6 +29,7 @@ public class TLS {
         // get iv from string
         IvParameterSpec iv = stringToIV(IV);
 
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
         decryptor = new Decryptor(destPRK,obfuscatedKey,iv);
         digitalSignValidator = new DigitalSignValidator(srcPBK);
     }

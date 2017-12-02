@@ -23,12 +23,13 @@ public class Decryptor {
     private IvParameterSpec IV;
     private SecretKey AESKey;
 
-    private final static String RSA = "RSA";
+    private final static String RSA = "RSA/None/OAEPWithSHA1AndMGF1Padding";   
+    private final static String provider = "BC";
     private final static String AES = "AES/CBC/PKCS5Padding";
 
-    public Decryptor(PrivateKey RSAPrivateKey, String obfuscatedAESKey, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
+    public Decryptor(PrivateKey RSAPrivateKey, String obfuscatedAESKey, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException, NoSuchProviderException {
         RSAKey = RSAPrivateKey;
-        RSACipher = Cipher.getInstance(RSA);
+        RSACipher = Cipher.getInstance(RSA, provider);
         RSACipher.init(Cipher.DECRYPT_MODE, RSAKey);
 
         AESKey = unobfuscateKey(obfuscatedAESKey);

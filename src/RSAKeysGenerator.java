@@ -8,13 +8,13 @@ public class RSAKeysGenerator {
 
     public static void main(String[] unused) throws Exception {
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-        kpg.initialize(2048); // 2048 is the keysize.
+        kpg.initialize(1024); // 1024 is the keysize.
         KeyPair kp = kpg.generateKeyPair();
         PublicKey pubk = kp.getPublic();
         PrivateKey prvk = kp.getPrivate();
 
-        storeKey(prvk,"HERE_PATH_TO_PRIVATE_KEY");
-        storeKey(pubk,"HERE_PATH_TO_PUBLIC_KEY");
+        storeKey(prvk,"/Users/mario/Desktop/FairWindServer/dev/fairwind-license-generator/private_key.txt");
+        storeKey(pubk,"/Users/mario/Desktop/FairWindServer/dev/fairwind-license-generator/public_key.txt");
     }
 
     private static void storeKey(Key key, String path) throws IOException {

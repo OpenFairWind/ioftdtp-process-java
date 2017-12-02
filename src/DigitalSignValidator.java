@@ -15,10 +15,12 @@ import java.util.Base64;
 public class DigitalSignValidator {
 
     private Cipher RSACipher;
+    private final static String RSA = "RSA/None/OAEPWithSHA1AndMGF1Padding";
+    private final static String provider = "BC";
 
-    public DigitalSignValidator(PublicKey RSAKey) throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException {
+    public DigitalSignValidator(PublicKey RSAKey) throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, NoSuchProviderException {
         // RSA decryptor
-        RSACipher = Cipher.getInstance("RSA");
+        RSACipher = Cipher.getInstance(RSA,provider);
         RSACipher.init(Cipher.DECRYPT_MODE, RSAKey);
     }
 
