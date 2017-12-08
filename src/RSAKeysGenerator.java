@@ -6,15 +6,21 @@ import java.util.Base64;
 
 public class RSAKeysGenerator {
 
-    public static void main(String[] unused) throws Exception {
-        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-        kpg.initialize(1024); // 1024 is the keysize.
-        KeyPair kp = kpg.generateKeyPair();
-        PublicKey pubk = kp.getPublic();
-        PrivateKey prvk = kp.getPrivate();
+    public static void main(String[] args) throws Exception {
+        if (args.length==2) {
+		String privateKeyPath=args[0];
+		String publicKeyPath=args[1];
+        	KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+        	kpg.initialize(1024); // 1024 is the keysize.
+        	KeyPair kp = kpg.generateKeyPair();
+        	PublicKey pubk = kp.getPublic();
+        	PrivateKey prvk = kp.getPrivate();
 
-        storeKey(prvk,"/Users/mario/Desktop/FairWindServer/dev/fairwind-license-generator/private_key.txt");
-        storeKey(pubk,"/Users/mario/Desktop/FairWindServer/dev/fairwind-license-generator/public_key.txt");
+        	storeKey(prvk,privateKeyPath);
+        	storeKey(pubk,publicKeyPath);
+	} else {
+          // Usage...
+	}
     }
 
     private static void storeKey(Key key, String path) throws IOException {

@@ -1,0 +1,20 @@
+#! /bin/bash
+
+export PROCESS_HOME=/home/ubuntu/dev/ioftdtp-process-java
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+
+CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib/:/home/ubuntu/dev/ioftdtp-process-java/src/.
+
+for jar in `ls $PROCESS_HOME/lib/*.jar`
+do
+  CLASSPATH=$CLASSPATH:$jar
+done
+
+export CLASSPATH
+
+javac=javac
+if test -n "$JAVA_HOME"; then
+    javac="$JAVA_HOME/bin/javac"
+fi
+
+"$javac" $PROCESS_HOME/src/*.java  "$@"
