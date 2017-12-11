@@ -1,9 +1,9 @@
 #! /bin/bash
 
-export PROCESS_HOME=/home/ubuntu/dev/ioftdtp-process-java
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+export PROCESS_HOME=PROJECT_ROOT_PATH
+export JAVA_HOME=JAVA_HOME_PATH
 
-CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib/:/home/ubuntu/dev/ioftdtp-process-java/src/.
+CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib/:PROCESS_HOME/src.
 
 for jar in `ls $PROCESS_HOME/lib/*.jar`
 do
