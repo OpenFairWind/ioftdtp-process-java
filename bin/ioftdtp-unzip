@@ -1,9 +1,27 @@
-#!/bin/sh
+#!/bin/bash
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+PROCESS_HOME="$DIR/.."
+
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+
+CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib/:
+
+for jar in `ls $PROCESS_HOME/lib/*.jar`
+do
+  CLASSPATH=$CLASSPATH:$jar
+done
+
 java=java
 if test -n "$JAVA_HOME"; then
     java="$JAVA_HOME/bin/java"
 fi
 
-exec "$java" FairWindUnzip "$@"
+exec "$java" -cp $CLASSPATH it.uniparthenope.ioftdtp.process.FairWindUnzip "$@"
 
 exit 1
